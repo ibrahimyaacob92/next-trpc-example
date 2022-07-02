@@ -1,19 +1,21 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import { trpc } from "../utils/trpc";
+import Link from "next/link";
+import LoginForm from "../components/LoginForm";
+import { useUserContext } from "../context/user.context";
 
 const Home: NextPage = () => {
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
+  const user = useUserContext();
 
-  // if (error) {
-  //   return <div>{JSON.stringify(error)}</div>;
-  // }
+  if (!user) {
+    return <LoginForm />;
+  }
 
-  return <div>Welcome</div>;
+  return (
+    <div>
+      <h1>Welcome {user.email}</h1>
+      <Link href="/post/new">Create Post</Link>
+    </div>
+  );
 };
 
 export default Home;

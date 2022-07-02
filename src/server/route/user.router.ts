@@ -18,7 +18,6 @@ export const userRouter = createRouter()
     input: createUserSchema,
     resolve: async ({ ctx, input }) => {
       const { email, name } = input;
-      console.log({ input });
 
       try {
         const user = await ctx.prisma.user.create({
@@ -64,7 +63,7 @@ export const userRouter = createRouter()
       }
       const token = await ctx.prisma.loginToken.create({
         data: {
-          redirect,
+          redirect: redirect.includes("login") ? "/" : redirect,
           user: {
             connect: {
               id: user.id,
@@ -123,5 +122,10 @@ export const userRouter = createRouter()
       return {
         redirect: token.redirect,
       };
+    },
+  })
+  .query("me", {
+    resolve: ({ ctx }) => {
+      return ctx.user;
     },
   });

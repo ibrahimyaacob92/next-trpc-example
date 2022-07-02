@@ -32,7 +32,7 @@ const LoginForm = (props: Props) => {
   });
 
   const onSubmit = (values: RequestOtpInput) => {
-    mutate(values);
+    mutate({ ...values, redirect: router.asPath });
   };
 
   // Catching email hash
