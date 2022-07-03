@@ -128,4 +128,10 @@ export const userRouter = createRouter()
     resolve: ({ ctx }) => {
       return ctx.user;
     },
+  })
+  .mutation("logout", {
+    resolve: ({ ctx }) => {
+      console.log("logging out");
+      ctx.user = null;
+    },
   });
